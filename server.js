@@ -12,9 +12,9 @@ const swaggerJsDoc=require('swagger-jsdoc');
 const swaggerUI=require('swagger-ui-express');
 
 //Route file
-const hospitals = require('./routes/hospitals');
+const dentists = require('./routes/dentists');
 const auth = require('./routes/auth');
-const appointments = require('./routes/appointments');
+const bookings = require('./routes/bookings');
 
 //Load env vars
 dotenv.config({path:'./config/config.env'});
@@ -53,9 +53,9 @@ app.use(hpp());
 app.use(cors());
 
 //Mount routers
-app.use('/api/v1/hospitals',hospitals);
+app.use('/api/v1/dentists',dentists);
 app.use('/api/v1/auth',auth);
-app.use('/api/v1/appointments',appointments);
+app.use('/api/v1/bookings',bookings);
 
 const PORT=process.env.PORT || 5000;
 const Server = app.listen(PORT, console.log('Server running in ', process.env.NODE_ENV, ' mode on port ', PORT));
@@ -66,24 +66,3 @@ process.on('unhandledRejection', (err,promise) => {
     //Close server & exit process
     Server.close(()=>process.exit(1));
 });
-
-//Swagger
-const swaggerOptions={
-    swaggerDefinition:{
-        openapi: '3.0.0',
-        info: {
-            title: 'Library API',
-            version: '1.0.0',
-            description: 'A simple Express VacQ API'
-        },
-        servers: [
-            {
-                url: 'http://localhost:5000/api/v1'
-            }
-        ],
-    },
-    apis:['./routes/*.js'],
-};
-
-const swaggerDocs=swaggerJsDoc(swaggerOptions);
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
