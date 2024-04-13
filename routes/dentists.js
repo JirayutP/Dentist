@@ -1,5 +1,5 @@
 const express = require('express');
-const { getDentists, getDentist, createDentist, updateDentist, deleteDentist } = require('../controllers/dentists');
+const { getDentists, getDentist, createDentist, updateDentist, deleteDentist, getAreaOfExpertise, getByArea } = require('../controllers/dentists');
 
 //Include other resource routers
 const bookingRouter = require('./bookings');
@@ -12,6 +12,8 @@ const { protect, authorize } = require('../middleware/auth');
 router.use('/:dentistId/bookings/', bookingRouter);
 
 router.route('/').get(getDentists).post(protect, authorize('admin'), createDentist);
+router.route('/areaOfExpertise').get(getAreaOfExpertise);
+router.route('/byArea/:area').get(getByArea);
 router.route('/:id').get(getDentist).put(protect, authorize('admin'), updateDentist).delete(protect, authorize('admin'), deleteDentist);
 
 module.exports = router;
