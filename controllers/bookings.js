@@ -43,7 +43,7 @@ exports.getBookings=async (req,res,next)=>{
 
 //@desc     Get single booking
 //route     Get /api/v1/bookings/:id
-//@access   Public
+//@access   Private
 exports.getBooking=async (req,res,next)=>{
     try{
         const booking=await Booking.findById(req.params.id).populate({

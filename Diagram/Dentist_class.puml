@@ -1,0 +1,106 @@
+@startuml DentistBooking
+left to right direction
+package "DentistBooking"{
+    class "<<Application>>\nDentistService" as DentistService{}
+
+        package "Dentist"{
+            class "<<Resource>>\nDentists" as ResourceDentists{
+                <<GET>> +getDentists():Dentist
+                <<POST>> -createDentist():Dentist
+            }
+
+            class "<<Resource>>\nDentist" as ResourceDentist {
+                <<GET>> +getDentist(): Dentist
+                <<PUT>> -updateDentist(): Dentist
+                <<DELETE>> -deleteDentist(): void
+            }
+
+            class "<<Resource>>\nAreaOfExpertise" as ResourceAreaOfExpertise {
+                <<GET>> -getAreaOfExpertise(): Dentist
+            }
+
+            class "<<Resource>>\nByArea" as ResourceByArea {
+                <<GET>> -getByArea(): Dentist
+            }
+
+            class "<<Representation>>\nDentist" as RepresentationDentist {
+                -name
+                -yearsOfExperience
+                -areaOfExpertise
+            }
+        }
+
+        package "Auth"{
+            class "<<Resource>>\nRegister" as ResourceRegister{
+                <<POST>> +register():User
+            }
+
+            class "<<Resource>>\nLogin" as ResourceLogin {
+                <<POST>> +login(): User
+            }
+
+            class "<<Resource>>\nGetMe" as ResourceGetMe {
+                <<GET>> -getMe(): User
+            }
+
+            class "<<Resource>>\nBLogout" as ResourceLogout {
+                <<GET>> -logout(): User
+            }
+
+            class "<<Representation>>\nUser" as RepresentationUser {
+                -name
+                -telephone
+                -email
+                -role
+                -password
+                -createAt
+            }
+        }
+
+        package "Booking"{
+            class "<<Resource>>\nBookings" as ResourceBookings{
+                <<GET>> -getBookings():Booking
+                <<POST>> -addBooking():Booking
+            }
+
+            class "<<Resource>>\nBooking" as ResourceBooking {
+                <<GET>> -getBooking(): Dentist
+                <<PUT>> -updateBooking(): Dentist
+                <<DELETE>> -deleteBooking(): void
+            }
+
+            class "<<Representation>>\nBooking" as RepresentationBooking {
+                -bookingDate
+                -user
+                -dentist
+                -createdAt
+            }
+        }
+        
+}
+
+' start dentist
+DentistService ..> ResourceDentists:"/dentists\n<<Path>>"
+ResourceDentists ..> ResourceAreaOfExpertise: "/areaOfExpertise\n<<Path>>"
+ResourceAreaOfExpertise ..> RepresentationDentist: "<<use>>"
+ResourceDentists ..> ResourceByArea: "/byArea/{area}\n<<Path>>"
+ResourceByArea ..> RepresentationDentist: "<<use>>"
+ResourceDentists ..> ResourceDentist: "/{dentistId}\n<<Path>>"
+ResourceDentist ..> RepresentationDentist: "<<use>>"
+
+' start auth
+DentistService ..> ResourceRegister:"/auth/register\n<<Path>>"
+ResourceRegister ..> RepresentationUser: "<<use>>"
+DentistService ..> ResourceLogin:"/auth/login\n<<Path>>"
+ResourceLogin ..> RepresentationUser: "<<use>>"
+DentistService ..> ResourceGetMe:"/auth/me\n<<Path>>"
+ResourceGetMe ..> RepresentationUser: "<<use>>"
+DentistService ..> ResourceLogout:"/auth/logout\n<<Path>>"
+ResourceLogout ..> RepresentationUser: "<<use>>"
+
+' start booking
+DentistService ..> ResourceBookings:"/bookings\n<<Path>>"
+ResourceBookings ..> ResourceBooking: "/{bookingId}\n<<Path>>"
+ResourceBooking ..> RepresentationBooking: "<<use>>"
+
+@enduml

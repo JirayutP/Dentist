@@ -118,7 +118,7 @@ exports.deleteDentist=async (req,res,next) => {
 
 //@desc     Get all AreaOfExpertise
 //@route    Get /api/v1/dentists/areaOfExpertise
-//@access   Public
+//@access   Private
 exports.getAreaOfExpertise = async (req, res, next) => {
   try {
     // Use distinct() method to get unique areaOfExpertise values
@@ -133,7 +133,7 @@ exports.getAreaOfExpertise = async (req, res, next) => {
 
 //@desc     Get dentists ba area
 //@route    Get /api/v1/dentists/byArea/:area
-//@access   Public
+//@access   Private
 exports.getByArea = async (req, res, next) => {
     try {
       // Find dentists with matching areaOfExpertise using a query

@@ -11,7 +11,7 @@ participant "<<model>>\n:Hospital" as modelHospital
 database "<<MongoDB>>\n:hospitals" as HospitalsDatabase
 
 client->server ++:req.delete('/hospitals/:id')
-server->routerHospitals ++:app.use('/hospitals/:id',hospitals)
+server->routerHospitals ++:app.use('/hospitals',hospitals)
 routerHospitals -> controllersHospitals ++:deleteHospital()
 controllersHospitals->modelHospital ++:deleteById(req.params.id)
 modelHospital ->HospitalsDatabase ++: findByIdAndDelete(req.params.id)

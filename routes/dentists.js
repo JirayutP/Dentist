@@ -12,8 +12,8 @@ const { protect, authorize } = require('../middleware/auth');
 router.use('/:dentistId/bookings/', bookingRouter);
 
 router.route('/').get(getDentists).post(protect, authorize('admin'), createDentist);
-router.route('/areaOfExpertise').get(getAreaOfExpertise);
-router.route('/byArea/:area').get(getByArea);
+router.route('/areaOfExpertise').get(protect, getAreaOfExpertise);
+router.route('/byArea/:area').get(protect, getByArea);
 router.route('/:id').get(getDentist).put(protect, authorize('admin'), updateDentist).delete(protect, authorize('admin'), deleteDentist);
 
 module.exports = router;
