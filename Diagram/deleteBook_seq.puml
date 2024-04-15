@@ -1,0 +1,22 @@
+@startuml Manage Booking (DELETE)
+
+footer Page %page% of %lastpage%
+title "Manage Booking (DELETE)"
+
+participant "Client" as client
+participant "<<javaScript>>\n:server" as server
+participant "<<router>>\n:bookings" as routerBookings
+participant "<<controllers>>\n:bookings" as controllersBookings
+participant "<<model>>\n:Booking" as modelBooking
+database "<<MongoDB>>\n:bookings" as BookingsDatabase
+
+client->server ++:req.delete('/bookings/:id')
+server->routerBookings ++:app.use('/bookings',bookings)
+routerBookings -> controllersBookings ++:deleteBooking(req.params.id)
+controllersBookings->modelBooking ++:deleteById(req.params.id)
+modelBooking ->BookingsDatabase ++: findByIdAndDelete(req.params.id)
+BookingsDatabase --> modelBooking --: deletedBooking
+controllersBookings <-- modelBooking --:deletedBooking
+controllersBookings->client --:response
+
+@enduml

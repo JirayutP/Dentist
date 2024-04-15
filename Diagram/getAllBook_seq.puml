@@ -1,0 +1,22 @@
+@startuml Manage Booking (GET All)
+
+footer Page %page% of %lastpage%
+title "Manage Booking (GET All)"
+
+participant "Client" as client
+participant "<<javaScript>>\n:server" as server
+participant "<<router>>\n:bookings" as routerBookings
+participant "<<controllers>>\n:bookings" as controllersBookings
+participant "<<model>>\n:Booking" as modelBooking
+database "<<MongoDB>>\n:bookings" as BookingsDatabase
+
+client->server ++:req.get('/bookings')
+server->routerBookings ++:app.use('/bookings',bookings)
+routerBookings -> controllersBookings ++:getBookings()
+controllersBookings->modelBooking ++:getAll()
+modelBooking ->BookingsDatabase ++: find({})
+BookingsDatabase --> modelBooking --: bookings
+controllersBookings <-- modelBooking --:bookings
+controllersBookings->client --:response
+
+@enduml

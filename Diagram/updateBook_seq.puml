@@ -1,0 +1,22 @@
+@startuml Manage Booking (PUT)
+
+footer Page %page% of %lastpage%
+title "Manage Booking (PUT)"
+
+participant "Client" as client
+participant "<<javaScript>>\n:server" as server
+participant "<<router>>\n:bookings" as routerBookings
+participant "<<controllers>>\n:bookings" as controllersBookings
+participant "<<model>>\n:Booking" as modelBooking
+database "<<MongoDB>>\n:bookings" as BookingsDatabase
+
+client->server ++:req.put('/bookings/:id')
+server->routerBookings ++:app.use('/bookings',bookings)
+routerBookings -> controllersBookings ++:updateBooking(req.params.id, req.body)
+controllersBookings->modelBooking ++:updateById(req.params.id, req.body)
+modelBooking ->BookingsDatabase ++: findByIdAndUpdate(req.params.id, req.body)
+BookingsDatabase --> modelBooking --: updatedBooking
+controllersBookings <-- modelBooking --:updatedBooking
+controllersBookings->client --:response
+
+@enduml

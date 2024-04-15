@@ -1,0 +1,22 @@
+@startuml Auth Register (POST)
+
+footer Page %page% of %lastpage%
+title "Auth Register (POST)"
+
+participant "Client" as client
+participant "<<javaScript>>\n:server" as server
+participant "<<router>>\n:auth" as routerAuth
+participant "<<controllers>>\n:auth" as controllersAuth
+participant "<<model>>\n:User" as modelUser
+database "<<MongoDB>>\n:users" as UserssDatabase
+
+client->server ++:req.post('/auth/register')
+server->routerAuth ++:app.use('/auth',auth)
+routerAuth -> controllersAuth ++:register(req.body)
+controllersAuth->modelUser ++:create(req.body)
+modelUser ->UserssDatabase ++:UserSchema
+UserssDatabase --> modelUser --:user
+controllersAuth <-- modelUser --:user
+controllersAuth->client --:response Token
+
+@enduml

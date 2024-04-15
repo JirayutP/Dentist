@@ -1,0 +1,22 @@
+@startuml Manage Dentist (GET All)
+
+footer Page %page% of %lastpage%
+title "Manage Dentist (GET All)"
+
+participant "Client" as client
+participant "<<javaScript>>\n:server" as server
+participant "<<router>>\n:dentists" as routerDentists
+participant "<<controllers>>\n:dentists" as controllersDentists
+participant "<<model>>\n:Dentist" as modelDentist
+database "<<MongoDB>>\n:dentists" as DentistsDatabase
+
+client->server ++:req.get('/dentists')
+server->routerDentists ++:app.use('/dentists',dentists)
+routerDentists -> controllersDentists ++:getDentists()
+controllersDentists->modelDentist ++:getAll()
+modelDentist ->DentistsDatabase ++: find({})
+DentistsDatabase --> modelDentist --: dentists
+controllersDentists <-- modelDentist --:dentists
+controllersDentists->client --:response
+
+@enduml
