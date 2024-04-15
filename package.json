@@ -21,11 +21,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js"
   },
-  "name": "a-5-jirayutp",
-  "description": "[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/_qhOw8kl)",
+  "name": "Dentist",
+  "description": "https://github.com/JirayutP/Dentist",
   "version": "1.0.0",
   "main": "server.js",
-  "author": "",
+  "author": "Jirayut Phothawilkiat 6432022721",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.0.3"
