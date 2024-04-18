@@ -6,12 +6,17 @@ title "Manage Booking (PUT)"
 participant "Client" as client
 participant "<<javaScript>>\n:server" as server
 participant "<<router>>\n:bookings" as routerBookings
+participant "<<middleware>>\n:auth" as middlewareAuth
 participant "<<controllers>>\n:bookings" as controllersBookings
 participant "<<model>>\n:Booking" as modelBooking
 database "<<MongoDB>>\n:bookings" as BookingsDatabase
 
 client->server ++:req.put('/bookings/:id')
 server->routerBookings ++:app.use('/bookings',bookings)
+routerBookings -> middlewareAuth ++:protect()
+middlewareAuth --> routerBookings --:
+routerBookings -> middlewareAuth ++:authorize('admin', 'user')
+middlewareAuth --> routerBookings --:
 routerBookings -> controllersBookings ++:updateBooking(req.params.id, req.body)
 controllersBookings->modelBooking ++:updateById(req.params.id, req.body)
 modelBooking ->BookingsDatabase ++: findByIdAndUpdate(req.params.id, req.body)

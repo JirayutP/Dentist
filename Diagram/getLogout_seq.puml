@@ -6,10 +6,13 @@ title "Auth Logout (GET)"
 participant "Client" as client
 participant "<<javaScript>>\n:server" as server
 participant "<<router>>\n:auth" as routerAuth
+participant "<<middleware>>\n:auth" as middlewareAuth
 participant "<<controllers>>\n:auth" as controllersAuth
 
 client->server ++:req.get('/auth/logout')
 server->routerAuth ++:app.use('/auth',auth)
+routerAuth -> middlewareAuth ++:protect()
+middlewareAuth --> routerAuth --:
 routerAuth -> controllersAuth ++:logout()
 controllersAuth->client --:response data: {}
 

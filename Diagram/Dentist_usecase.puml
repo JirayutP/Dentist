@@ -6,31 +6,32 @@ actor User as "User"
 actor RegisteredUser as "Registered User"
 actor Admin as "Admin"
 
-rectangle "Auth" {
-    usecase "Register" as UC_Register
-    usecase "Login" as UC_Login
-    usecase "View Profile" as UC_ViewProfile
-    usecase "Logout" as UC_Logout
-}
+rectangle "DentService" {
+    rectangle "Auth" {
+        usecase "Register" as UC_Register
+        usecase "Login" as UC_Login
+        usecase "View Profile" as UC_ViewProfile
+        usecase "Logout" as UC_Logout
+    }
 
-rectangle "Booking" {
-    usecase "View All Bookings" as UC_ViewBookings
-    usecase "View Single Booking" as UC_ViewBooking
-    usecase "Create New Booking" as UC_CreateBooking
-    usecase "Update Booking" as UC_UpdateBooking
-    usecase "Delete Booking" as UC_DeleteBookind
-}
+    rectangle "Booking" {
+        usecase "View All Bookings" as UC_ViewBookings
+        usecase "View Single Booking" as UC_ViewBooking
+        usecase "Create New Booking" as UC_CreateBooking
+        usecase "Update Booking" as UC_UpdateBooking
+        usecase "Delete Booking" as UC_DeleteBookind
+    }
 
-rectangle "Dentist" {
-    usecase "View All Dentists" as UC_ViewDentists
-    usecase "View Single Dentist" as UC_ViewDentist
-    usecase "Create New Dentist" as UC_CreateDentist
-    usecase "Update Dentist" as UC_UpdateDentist
-    usecase "Delete Dentist" as UC_DeleteDentist
-    usecase "View All Area Of Expertises" as UC_ViewArea
-    usecase "Search Dentists By Area" as UC_SearchByArea
+    rectangle "Dentist" {
+        usecase "View All Dentists" as UC_ViewDentists
+        usecase "View Single Dentist" as UC_ViewDentist
+        usecase "Create New Dentist" as UC_CreateDentist
+        usecase "Update Dentist" as UC_UpdateDentist
+        usecase "Delete Dentist" as UC_DeleteDentist
+        usecase "View All Area Of Expertises" as UC_ViewArea
+        usecase "Search Dentists By Area" as UC_SearchByArea
+    }
 }
-
 RegisteredUser --^ User
 Admin --^ User
 ' or --|>
