@@ -64,8 +64,8 @@ package "DentistBooking"{
             }
 
             class "<<Resource>>\nBooking" as ResourceBooking {
-                <<GET>> -getBooking(): Dentist
-                <<PUT>> -updateBooking(): Dentist
+                <<GET>> -getBooking(): Booking
+                <<PUT>> -updateBooking(): Booking
                 <<DELETE>> -deleteBooking(): void
             }
 

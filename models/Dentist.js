@@ -18,7 +18,7 @@ const DentistsSchema = new mongoose.Schema({
     }
 });
 
-//Cascade delete poopintments when a dentist is deleted
+//Cascade delete booking when a dentist is deleted
 DentistsSchema.pre('deleteOne', {document:true, query:false}, async function(next){
     console.log(`Bookings being removed from dentist ${this._id}`);
     await this.model('Booking').deleteMany({dentist: this._id});

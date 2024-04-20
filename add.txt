@@ -1,0 +1,3 @@
+-The system shall allow the admin to create dentist information.
+-The system shall allow the admin to delete any dentist information.
+-The system shall allow the registered user to search dentist information by area of expertise.
