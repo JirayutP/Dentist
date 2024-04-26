@@ -12,9 +12,9 @@ database "<<MongoDB>>\n:bookings" as BookingsDatabase
 
 client->server ++:req.get('/bookings')
 server->routerBookings ++:app.use('/bookings',bookings)
-routerBookings -> controllersBookings ++:getBookings()
-controllersBookings->modelBooking ++:getAll()
-modelBooking ->BookingsDatabase ++: find({})
+routerBookings -> controllersBookings ++:getBookings(req.user)
+controllersBookings->modelBooking ++:getAll(req.user)
+modelBooking ->BookingsDatabase ++: find({user:req.user.id})
 BookingsDatabase --> modelBooking --: bookings
 controllersBookings <-- modelBooking --:bookings
 controllersBookings->client --:response
